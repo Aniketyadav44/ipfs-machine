@@ -22,11 +22,10 @@ app.post('/upload', async(req,res)=>{
     return res.send(fileHash)
 })
 
-const addFile = async({path, content})=>{
-    const file = {path: path, content: Buffer.from(content)}
+const addFile = async({content})=>{
     console.log(content)
-    const { cid } = await ipfs.add(content)
-    return cid
+    const data = await ipfs.add(Buffer.from(content))
+    return data
 }
 
 
