@@ -1,7 +1,6 @@
 import express from 'express'
 import * as IPFS from 'ipfs-core'
 
-// const ipfs = create(new URL('http://ec2-54-146-87-172.compute-1.amazonaws.com:5001/'))
 const ipfs = await IPFS.create()
 const app = express()
 
@@ -16,10 +15,10 @@ app.listen(3000, ()=>{
 })
 
 app.post('/upload', async(req,res)=>{
-    const data = req.body
+    const data = req.file
     console.log(data)
-    const fileHash = await addFile(data)
-    return res.send(fileHash)
+    // const fileHash = await addFile(data)
+    return res.send(Buffer.from(content))
 })
 
 const addFile = async({content})=>{
