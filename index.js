@@ -15,14 +15,12 @@ app.listen(3000, ()=>{
 })
 
 app.post('/upload', async(req,res)=>{
-    const data = req.body
-    console.log(data)
-    // const fileHash = await addFile(data)
-    return res.send(Buffer.from(content))
+    const data = req.body["content"]
+    const fileHash = await addFile(data)
+    return res.send(fileHash)
 })
 
 const addFile = async({content})=>{
-    console.log(content)
     const data = await ipfs.add(Buffer.from(content))
     return data
 }
