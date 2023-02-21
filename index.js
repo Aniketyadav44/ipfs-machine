@@ -1,5 +1,6 @@
 import express from 'express'
 import * as IPFS from 'ipfs-core'
+import 'os'
 
 const ipfs = await IPFS.create()
 const app = express()
