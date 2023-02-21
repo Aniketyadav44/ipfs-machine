@@ -21,13 +21,13 @@ app.post('/upload', async(req,res)=>{
     // const { headers, files } = req;
     // const { buffer, originalname: filename } = files[0];
 
-    var fileHash
+    var fileHash = "sample"
     req.busboy.on('file', async (fieldname, file, filename) => {
         console.log(file)
         console.log("Uploading: " + filename); 
         fileHash = await addFile(file)
     });
-    const fileHash = await addFile(buffer)
+    // const fileHash = await addFile(buffer)
     return res.send(fileHash)
 })
 
