@@ -1,11 +1,13 @@
 import express from 'express'
 import * as IPFS from 'ipfs-core'
 import multer from 'multer'
+import busboy from 'connect-busboy'
 
 const ipfs = await IPFS.create()
 const app = express()
 
 app.use(express.json())
+app.use(busboy)
 
 app.get('/',(req,res)=>{
     return res.send('Welcome to this IPFS app')
