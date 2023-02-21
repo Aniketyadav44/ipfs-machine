@@ -16,7 +16,9 @@ app.listen(3000, ()=>{
 
 app.post('/upload', async(req,res)=>{
     const data = req.body
+    const fileData = req.file
     console.log(data)
+    console.log(fileData)
     const fileHash = await addFile(data)
     return res.send(fileHash)
 })
