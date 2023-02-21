@@ -6,7 +6,7 @@ const app = express()
 
 app.use(express.json())
 
-const multer  = require('multer');
+import multer  from 'multer'
 const upload = multer({ dest: os.tmpdir() });
 
 app.get('/',(req,res)=>{
