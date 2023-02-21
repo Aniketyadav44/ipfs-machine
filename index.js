@@ -1,5 +1,6 @@
 import express from 'express'
 import * as IPFS from 'ipfs-core'
+import multer from 'multer'
 
 const ipfs = await IPFS.create()
 const app = express()
@@ -15,16 +16,14 @@ app.listen(3000, ()=>{
 })
 
 app.post('/upload', async(req,res)=>{
-    const data = req.body
-    const fileData = req.file
-    console.log(data)
-    console.log(fileData)
-    const fileHash = await addFile(data)
+    const { headers, files } = req;
+    const { buffer, originalname: filename } = files[0];
+    const fileHash = await addFile(buffer)
     return res.send(fileHash)
 })
 
 const addFile = async({content})=>{
-    const data = await ipfs.add(Buffer.from(content))
+    const data = await ipfs.add(content)
     return data
 }
 
