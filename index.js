@@ -20,17 +20,10 @@ app.listen(3000, ()=>{
 
 app.post('/upload', upload.single("file"), async(req,res)=>{
     // const { headers, files } = req;
-    // const { buffer, originalname: filename } = files[0];
+    const { buffer, originalname: filename } = req.file;
 
-    var fileHash = "sample"
-    // req.busboy.on('file', async (fieldname, file, filename) => {
-    //     console.log(file)
-    //     console.log("Uploading: " + filename); 
-    //     fileHash = await addFile(file)
-    // });
-    // const fileHash = await addFile(buffer)
-    const data = req.file
-    console.log(data)
+    var fileHash = "failed"
+    fileHash = await addFile(buffer)
     return res.send(fileHash)
 })
 
