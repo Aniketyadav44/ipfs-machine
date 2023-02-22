@@ -23,7 +23,8 @@ app.post('/upload', upload.single("file"), async(req,res)=>{
     const { buffer, originalname: filename } = req.file;
 
     var fileHash = "failed"
-    fileHash = await addFile(buffer)
+    const uplaodData = {"content":buffer}
+    fileHash = await addFile(uplaodData)
     return res.send(fileHash)
 })
 
