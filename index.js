@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
 //reading api key variable
-var serverApiKey = fs.readFileSync("./api")
+var serverApiKey = fs.readFileSync("./api.txt")
 
 //encryption and decryption variables
 var algorithm = "aes-192-cbc";
