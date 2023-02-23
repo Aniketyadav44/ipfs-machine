@@ -52,6 +52,7 @@ const encrypt = ({secretKey, cid})=>{
 //decrypt route
 app.post('/decrypt', async(req,res)=>{
     const secretKey = req.body.secretKey
+    const encrypted = req.body.encrypted
 
     const key = crypto.scryptSync(secretKey, 'salt', 24)
 
