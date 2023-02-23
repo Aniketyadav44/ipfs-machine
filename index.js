@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
 //reading api key variable
-var serverApiKey = fs.readFileSync("./api.txt")
+var serverApiKey = fs.readFileSync("./api")
 
 //encryption and decryption variables
 var algorithm = "aes-192-cbc";
@@ -27,7 +27,7 @@ app.get('/',(req,res)=>{
 //api key authentication middleware
 const authenticateKey = (req, res, next)=>{
     let apiKey = req.header('x-api-key')
-    if(apiKey==serverApiKey){
+    if(apiKey==serverApiKey.toString()){
         next()
     }else{
         res.status(403).send({"error":"INVALID_API_KEY"})
