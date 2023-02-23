@@ -24,6 +24,16 @@ app.get('/',(req,res)=>{
     return res.send('Welcome to this IPFS app')
 })
 
+//api key authentication middleware
+const authenticateKey = (req, res, next)=>{
+    let apiKey = req.header('x-api-key')
+    if(apiKey==serverApiKey){
+        next()
+    }else{
+        res.status(403).send({"error":"INVALID_API_KEY"})
+    }
+}
+
 //upload post route to upload to ipfs
 app.post('/api/upload', authenticateKey, upload.single("file"), async(req,res)=>{
     const { buffer, originalname: filename } = req.file;
@@ -67,16 +77,6 @@ const encrypt = (secretKey, cid)=>{
     const cipher = crypto.createCipheriv(algorithm, key, buff)
     var encryptedCID = cipher.update(cid, 'utf8', 'hex') + cipher.final('hex')
     return encryptedCID
-}
-
-//api key authentication function
-const authenticateKey = (req, res, next)=>{
-    let apiKey = req.header('x-api-key')
-    if(apiKey==serverApiKey){
-        next()
-    }else{
-        res.status(403).send({"error":"INVALID_API_KEY"})
-    }
 }
 
 //listening on port 3000
