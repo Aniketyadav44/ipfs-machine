@@ -27,8 +27,8 @@ app.post('/upload', upload.single("file"), async(req,res)=>{
     var fileHash = "failed"
     const uplaodData = {"content":buffer}
     fileHash = await addFile(uplaodData)
-
-    var encryptedCID = encrypt(secretKey, fileHash["cid"]["/"])
+    
+    var encryptedCID = encrypt(secretKey, fileHash["path"])
     return res.send({"encryptedCID":encryptedCID,"size": fileHash["size"],"mode": fileHash["mode"],})
 })
 
@@ -44,7 +44,6 @@ var buff = fs.readFileSync("./test")
 const encrypt = (secretKey, cid)=>{
     const key = crypto.scryptSync(secretKey, 'salt', 24)
     
-    console.log(cid)
     const cipher = crypto.createCipheriv(algorithm, key, buff)
     var encryptedCID = cipher.update(cid, 'utf8', 'hex') + cipher.final('hex')
     return encryptedCID
