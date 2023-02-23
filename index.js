@@ -22,7 +22,7 @@ app.listen(3000, ()=>{
 
 app.post('/upload', upload.single("file"), async(req,res)=>{
     const { buffer, originalname: filename } = req.file;
-    const secretKey = String(req.body.secretKey)
+    const secretKey = req.body.secretKey
 
     var fileHash = "failed"
     const uplaodData = {"content":buffer}
@@ -44,6 +44,7 @@ var buff = fs.readFileSync("./test")
 const encrypt = (secretKey, cid)=>{
     const key = crypto.scryptSync(secretKey, 'salt', 24)
     
+    console.log(cid)
     const cipher = crypto.createCipheriv(algorithm, key, buff)
     var encryptedCID = cipher.update(cid, 'utf8', 'hex') + cipher.final('hex')
     return encryptedCID
