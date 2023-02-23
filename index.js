@@ -27,7 +27,7 @@ app.get('/',(req,res)=>{
 //api key authentication middleware
 const authenticateKey = (req, res, next)=>{
     let apiKey = req.header('x-api-key')
-    if(apiKey==serverApiKey.toString()){
+    if(apiKey==serverApiKey.toString().trim()){
         next()
     }else{
         res.status(403).send({"error":"INVALID_API_KEY"})
