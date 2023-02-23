@@ -51,14 +51,19 @@ const encrypt = (secretKey, cid)=>{
 
 //decrypt route
 app.post('/decrypt', upload.any(), async(req,res)=>{
-    const secretKey = req.body.secretKey
-    const encrypted = req.body.encrypted
+    try{
+        const secretKey = req.body.secretKey
+        const encrypted = req.body.encrypted
 
-    const key = crypto.scryptSync(secretKey, 'salt', 24)
+        const key = crypto.scryptSync(secretKey, 'salt', 24)
 
-    const decipher = crypto.createDecipheriv(algorithm, key, buff)
-    var decrypted = decipher.update(encrypted, 'hex', 'utf8') + decipher.final('utf8')
-    return res.send({"CID":decrypted})
+        const decipher = crypto.createDecipheriv(algorithm, key, buff)
+        var decrypted = decipher.update(encrypted, 'hex', 'utf8') + decipher.final('utf8')
+        return res.send({"CID":decrypted})
+    }catch(err){
+        if(err.code=="ERR_OSSL_BAD_DECRYPT")
+        return res.status(401).send({"error":"INVALID_KEY"})
+    }
 })
 
 
