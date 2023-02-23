@@ -41,7 +41,7 @@ const addFile = async({content})=>{
 //encryption and decryption service
 var algorithm = "aes-192-cbc";
 var buff = fs.readFileSync("./test")
-const encrypt = ({secretKey, cid})=>{
+const encrypt = (secretKey, cid)=>{
     const key = crypto.scryptSync(secretKey, 'salt', 24)
     
     const cipher = crypto.createCipheriv(algorithm, key, buff)
