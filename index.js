@@ -22,8 +22,7 @@ app.listen(3000, ()=>{
 
 app.post('/upload', upload.single("file"), async(req,res)=>{
     const { buffer, originalname: filename } = req.file;
-    const secretKey = req.body.secretKey
-    console.log("secret key:",secretKey)
+    const secretKey = String(req.body.secretKey)
 
     var fileHash = "failed"
     const uplaodData = {"content":buffer}
